@@ -29,7 +29,8 @@ SustainaMind is an AI-powered platform that helps individuals understand and red
 
 ## Technology Stack
 
-- **Frontend:** React  
+- **Frontend:** React (Vite)  
+  - Fast build and hot-reload with Vite bundler  
   - Responsive UI and interactive components  
   - Users input lifestyle, diet, and transportation habits directly in the browser  
 
@@ -51,35 +52,54 @@ SustainaMind is an AI-powered platform that helps individuals understand and red
    - List-like features (e.g., `Recycling`, `Cooking With`) are expanded into binary flags.  
    - Categorical features are encoded using OneHotEncoder.  
 
-2. **Model Training:**  
-   - Random Forest Regressor trained with 200 trees on historical carbon emission datasets.  
-   - Splits data into training and testing sets for accuracy evaluation.  
+2. **Model Training & Saving:**  
+   After training, the model and encoder are saved as `.pkl` files:  
+   ```python
+   with open("carbon_model.pkl", "wb") as f:
+       pickle.dump(model, f)
 
-3. **Prediction Workflow:**  
-   - Users input their data via the frontend.  
-   - Backend encodes categorical features and combines them with numeric features.  
-   - The model predicts CO₂ emissions instantly and returns the result.  
+   with open("encoder.pkl", "wb") as f:
+       pickle.dump({
+           "encoder": encoder,
+           "categorical_cols": categorical_cols,
+           "numerical_cols": numerical_cols
+       }, f)
 
-4. **Model Benefits:**  
-   - Captures complex interactions between features  
-   - Robust against missing or noisy data  
-   - Provides actionable insights for users  
+   print("✅ Model & encoder saved successfully!")
+````
+
+**Note:** After generating these files in the `Ai/` folder, they must be copied into the `backend/` folder so the FastAPI server can access them:
+
+```bash
+cp Ai/carbon_model.pkl backend/
+cp Ai/encoder.pkl backend/
+```
+
+3. **Prediction Workflow:**
+
+   * Users input their data via the frontend.
+   * Backend encodes categorical features and combines them with numeric features.
+   * The model predicts CO₂ emissions instantly and returns the result.
+
+4. **Model Benefits:**
+
+   * Captures complex interactions between features
+   * Robust against missing or noisy data
+   * Provides actionable insights for users
 
 ---
 
 ## Project Structure
 
 ```
-
 SustainaMind/
 │
-├─ Ai/                  # AI model, training scripts, and encoders
-├─ backend/             # FastAPI backend
-├─ frontend/            # React frontend
+├─ Ai/                  # AI model, training scripts, and encoders (pkl generated here)
+├─ backend/             # FastAPI backend (store pkl files here for API use)
+├─ frontend/            # React (Vite) frontend
 ├─ Readme.md            # Project documentation
 └─ .venv/               # Python virtual environment
-
-````
+```
 
 ---
 
@@ -87,16 +107,17 @@ SustainaMind/
 
 ### Prerequisites
 
-- Python 3.10+  
-- Node.js & npm/yarn  
-- Virtual environment (`venv`)  
+* Python 3.10+
+* Node.js & npm/yarn
+* Virtual environment (`venv`)
 
 ### Setup
 
-1. **Activate Python environment**  
+1. **Activate Python environment**
+
 ```bash
 source .venv/bin/activate
-````
+```
 
 2. **Install backend dependencies**
 
@@ -111,6 +132,13 @@ cd frontend
 npm install
 ```
 
+4. **Ensure AI model & encoder files are in backend**
+
+```bash
+cp Ai/carbon_model.pkl backend/
+cp Ai/encoder.pkl backend/
+```
+
 ---
 
 ## Usage
@@ -122,11 +150,11 @@ cd backend
 uvicorn main:app --reload
 ```
 
-2. **Run Frontend**
+2. **Run Frontend (Vite)**
 
 ```bash
 cd frontend
-npm start
+npm run dev
 ```
 
 3. **Access the app**
@@ -159,5 +187,3 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 ## License
 
 This project is licensed under the MIT License.
-
-
