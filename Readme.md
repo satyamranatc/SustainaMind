@@ -4,7 +4,7 @@ SustainaMind is an AI-powered platform that helps individuals understand and red
 
 ---
 
-##Table of Contents
+## Table of Contents
 
 - [Features](#features)  
 - [Technology Stack](#technology-stack)  
@@ -156,7 +156,7 @@ Contributions are welcome! Please fork the repository and submit a pull request.
 
 ---
 
-##License
+## License
 
 This project is licensed under the MIT License.
 
