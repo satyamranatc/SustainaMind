@@ -1,4 +1,4 @@
-#SustainaMind 🌱
+# SustainaMind 🌱
 
 SustainaMind is an AI-powered platform that helps individuals understand and reduce their carbon footprint. By analyzing lifestyle, diet, energy usage, and transportation habits, it provides personalized insights to live more sustainably.
 
